@@ -22,6 +22,12 @@
         "text": "step4.md"
       }
     ],
+	"assets": {
+		"host01": [
+			{"file": "todo-ihm.jar", "target": "/tmp", "chmod": "+x"},
+			{"file": "todo-api.jar", "target": "/tmp", "chmod": "+x"}
+		]
+	},
     "intro": {
       "text": "intro.md"
     },
@@ -32,7 +38,7 @@
   "environment": {
     "uilayout": "editor-terminal-split",
 	"showdashboard": true,
-    "dashboards": [{"name": "web", "href": "https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com"}]
+    "dashboards": [{"name": "web", "href": "https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com:8080"}]
   },
   "backend": {
     "imageid": "kubernetes-cluster-running"

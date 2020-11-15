@@ -25,7 +25,8 @@
 	"assets": {
 		"host01": [
 			{"file": "todo-ihm.jar", "target": "/tmp", "chmod": "+x"},
-			{"file": "todo-api.jar", "target": "/tmp", "chmod": "+x"}
+			{"file": "todo-api.jar", "target": "/tmp", "chmod": "+x"},
+			{"file": "sopra-steria-logo.png", "target": "/tmp", "chmod": "+x"},
 		]
 	},
     "intro": {
@@ -36,7 +37,6 @@
     }
   },
   "environment": {
-    "uilayout": "editor-terminal-split",
 	"showdashboard": true,
     "dashboards": [{"name": "web", "href": "https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com:8080"}]
   },

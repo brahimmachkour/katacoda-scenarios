@@ -31,7 +31,7 @@
   },
   "environment": {
     "uilayout": "terminal",
-	"showdashboard": true,
+    "showdashboard": true,
     "dashboards": [{"name": "web", "href": "https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com:30003"}]
   },
   "backend": {

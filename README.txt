@@ -3,13 +3,13 @@
 ###############################################################################
 # Create todo-api docker image
 ###############################################################################
-mkdir todo-api
+mkdir /root/todo-api
 
-cd todo-api
+cd /root/todo-api
 
 wget --no-check-certificate --content-disposition https://github.com/brahimmachkour/katacoda-scenarios/raw/main/k8s-test/assets/todo-api.jar
 
-cat > Dockerfile < EOF
+cat > Dockerfile << EOF
 FROM openjdk
 	
 WORKDIR /app
@@ -18,21 +18,27 @@ COPY todo-api.jar /app
 
 EXPOSE 9090
 
+ENV SPRING_DATASOURCE_PASSWORD=
+ENV SPRING_DATASOURCE_USER=
+ENV SPRING_DATASOURCE_URL=
+
 ENTRYPOINT ["java", "-jar", "/app/todo-api.jar"]
 EOF
 
-docker run -t todo-api .
+docker build -t todo-api .
+docker tag todo-api:latest bmachkour/todo-api:latest
+docker push bmachkour/todo-api:latest
 
 ###############################################################################
 # Create todo-ihm docker image
 ###############################################################################
-mkdir todo-ihm
+mkdir /root/todo-ihm
 
-cd todo-ihm
+cd /root/todo-ihm
 
 wget --no-check-certificate --content-disposition https://github.com/brahimmachkour/katacoda-scenarios/raw/main/k8s-test/assets/todo-ihm.jar
 
-cat > Dockerfile < EOF
+cat > Dockerfile << EOF
 FROM openjdk
 	
 WORKDIR /app
@@ -41,17 +47,21 @@ COPY todo-ihm.jar /app
 
 EXPOSE 8080
 
+ENV TODO_API_URL=
+
 ENTRYPOINT ["java", "-jar", "/app/todo-api.jar"]
 EOF
 
-docker run -t todo-ihm .
+docker build -t todo-ihm .
+docker tag todo-ihm:latest bmachkour/todo-ihm:latest
+docker push bmachkour/todo-ihm:latest
 
 ###############################################################################
 # Create Service mysql
 ###############################################################################
 mkdir /root/mysql-data
 
-cat > mysql-pv.yaml < EOF
+cat > /root/mysql-pv.yaml << EOF
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -80,7 +90,9 @@ spec:
       storage: 2Gi
 EOF
 
-cat > mysql.yaml < EOF
+kubectl create -f mysql-pv.yaml
+
+cat > mysql.yaml << EOF
 apiVersion: v1
 kind: Service
 metadata:
@@ -126,10 +138,12 @@ spec:
           claimName: mysql-pv-claim
 EOF
 
+kubectl create -f mysql.yaml
+
 ###############################################################################
 # Create Service todo-api
 ###############################################################################
-cat > todo-api.yaml < EOF
+cat > todo-api.yaml << EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -137,7 +151,7 @@ metadata:
   labels:
     app: todo-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: todo-api
@@ -148,7 +162,8 @@ spec:
     spec:
       containers:
       - name: todo-api
-        image: todo-api
+        image: bmachkour/todo-api:latest
+		command: ["java", "-jar", "/app/todo-api.jar"]
         ports:
         - containerPort: 9090
         env:
@@ -172,10 +187,12 @@ spec:
       targetPort: 9090
 EOF
 
+kubectl create -f todo-api.yaml
+
 ###############################################################################
 # Create Service todo-ihm
 ###############################################################################
-cat > todo-ihm.yaml < EOF
+cat > todo-ihm.yaml << EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -183,7 +200,7 @@ metadata:
   labels:
     app: todo-ihm
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: todo-ihm
@@ -194,7 +211,7 @@ spec:
     spec:
       containers:
       - name: todo-ihm
-        image: todo-ihm
+        image: bmachkour/todo-ihm:latest
         ports:
         - containerPort: 9090
         env:
@@ -214,3 +231,5 @@ spec:
       targetPort: 8080
       nodePort: 30003
 EOF
+
+kubectl create -f todo-ihm.yaml

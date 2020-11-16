@@ -18,10 +18,6 @@ COPY todo-api.jar /app
 
 EXPOSE 9090
 
-ENV SPRING_DATASOURCE_PASSWORD=
-ENV SPRING_DATASOURCE_USER=
-ENV SPRING_DATASOURCE_URL=
-
 ENTRYPOINT ["java", "-jar", "/app/todo-api.jar"]
 EOF
 
@@ -46,8 +42,6 @@ WORKDIR /app
 COPY todo-ihm.jar /app
 
 EXPOSE 8080
-
-ENV TODO_API_URL=
 
 ENTRYPOINT ["java", "-jar", "/app/todo-api.jar"]
 EOF

@@ -8,6 +8,7 @@
       {
         "title": "Step 1",
         "text": "step1.md"
+		"code": "start.sh"
       },
       {
         "title": "Step 2",

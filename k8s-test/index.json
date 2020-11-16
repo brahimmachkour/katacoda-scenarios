@@ -1,6 +1,6 @@
 {
   "title": "k8s-test",
-  "description": "Testing k8s cluster installation with katacoda",
+  "description": "Testing a k8s cluster installation with katacoda",
   "difficulty": "Beginner",
   "time": "60",
   "details": {

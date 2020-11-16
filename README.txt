@@ -163,7 +163,6 @@ spec:
       containers:
       - name: todo-api
         image: bmachkour/todo-api:latest
-		command: ["java", "-jar", "/app/todo-api.jar"]
         ports:
         - containerPort: 9090
         env:

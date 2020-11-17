@@ -1,14 +1,35 @@
-## Start HTTP Server
-`docker run -p 80:80 -d katacoda/docker-http-server`{{execute}}
+# Create todo-api docker image
 
-## Generated Link
+...
 
-https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com
+# Create todo-ihm docker image
 
-## Markdown 
-<pre><code>
-https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com
-</code></pre>
+...
 
-## Learn More
-[Displaying Tabs](https://katacoda.com/scenario-examples/scenarios/dashboard-tabs) and [embedding iFrames](https://katacoda.com/scenario-examples/scenarios/dashboard-tabs-iframe)
+# Push docker images into docker hub
+
+...
+
+# Create pv and pvc for mysl persistency
+
+...
+
+# Create deployment and service for mysql
+
+...
+
+# Create deployment and service for todo-api
+
+...
+
+# Create deployment and service for todo-ihm
+
+...
+
+# Make sure everything is up and running
+
+...
+
+# Clique Web link and make sure the application is accessible
+
+...
